@@ -4,9 +4,9 @@ class Game < ApplicationRecord
 
   has_many :plays
 
-  def add_scores(id)
+  def total_score(id)
     user = User.find(id)
-    total_score = user.plays.map do |play|
+    user.plays.map do |play|
       play.score
     end.sum
   end
@@ -14,8 +14,8 @@ class Game < ApplicationRecord
   def as_json
     {
       game_id: id,
-      scores: [{ user_id: player_1_id, score: add_scores(player_1_id)},
-               { user_id: player_2_id, score: add_scores(player_2_id)}]
+      scores: [{ user_id: player_1_id, score: total_score(player_1_id)},
+               { user_id: player_2_id, score: total_score(player_2_id)}]
     }
   end
 end

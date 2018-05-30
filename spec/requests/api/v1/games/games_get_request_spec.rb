@@ -12,7 +12,7 @@ describe 'it can get a single game' do
     sal.plays.create(game: game, word: "josh", score: 14)
     sal.plays.create(game: game, word: "no", score: 2)
   end
-  
+
   it 'returns a json response' do
     # Background: This story assumes the base data from running `rake db:seed`
     # When I send a GET request to "/api/v1/games/1" I receive a JSON response as follows:
