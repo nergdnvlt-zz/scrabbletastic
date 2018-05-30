@@ -1,0 +1,23 @@
+require 'rails_helper'
+require './app/controllers/search_controller'
+
+describe Word do
+  it 'initiates with real attributes' do
+    attrs = {"metadata"=>{"provider"=>"Oxford University Press"},
+             "results"=>
+                        [{"id"=>"foxes",
+                          "language"=>"en",
+                          "lexicalEntries"=>
+                                            [{"grammaticalFeatures"=>[{"text"=>"Third", "type"=>"Person"}, {"text"=>"Singular", "type"=>"Number"}, {"text"=>"Present", "type"=>"Tense"}],
+                                            "inflectionOf"=>[{"id"=>"fox", "text"=>"fox"}],
+                                            "language"=>"en",
+                                            "lexicalCategory"=>"Verb",
+                                            "text"=>"foxes"},
+                        {"grammaticalFeatures"=>[{"text"=>"Plural", "type"=>"Number"}], "inflectionOf"=>[{"id"=>"fox", "text"=>"fox"}], "language"=>"en", "lexicalCategory"=>"Noun", "text"=>"foxes"}],
+    "word"=>"foxes"}]}
+    word = Word.new(attrs, 'foxes')
+    message = word.message
+    expect(word).to be_a Word
+    expect(message).to eq("'foxes' is a valid word and its root form is 'fox'.")
+  end
+end
