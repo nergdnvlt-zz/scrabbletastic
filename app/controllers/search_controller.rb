@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   def index
     word = params['q']
-    @search = SearchService.new(word).message
+    @search ||= SearchService.new(word)
   end
 end
 
@@ -33,6 +33,11 @@ end
 
 class Word
   def initialize(attrs)
+    @original_word = attrs['results'][0]['id']
+    @root_word = attrs['results'][0]['lexicalEntries'][0]['inflectionOf'][0]['id']
+  end
 
+  def message
+    "'#{@original_word}' is a valid word and its root form is '#{@root_word}'."
   end
 end
