@@ -1,5 +1,4 @@
 require 'rails_helper'
-require './app/controllers/search_controller'
 
 describe Word do
   it 'initiates with real attributes' do
@@ -19,5 +18,13 @@ describe Word do
     message = word.message
     expect(word).to be_a Word
     expect(message).to eq("'foxes' is a valid word and its root form is 'fox'.")
+  end
+
+  it 'initiates with nil attributes' do
+    attrs = nil
+    word = Word.new(attrs, 'foxez')
+    message = word.message
+    expect(word).to be_a Word
+    expect(message).to eq("'foxez' is not a valid word.")
   end
 end
