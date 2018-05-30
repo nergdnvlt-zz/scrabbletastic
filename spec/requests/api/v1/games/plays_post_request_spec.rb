@@ -13,30 +13,44 @@ describe 'it can get a single game' do
     sal.plays.create(game: game, word: "no", score: 2)
   end
 
-  it 'returns a json response' do
-    # You can choose to send the user_id and word specified below however you'd like or are comfortable.
-    #
-    # When I send a POST request to "/api/v1/games/1/plays" with a user_id=1 and word=at
-    user = '1'
-    in_word = 'at'
-    post "/api/v1/games/1/plays?user_id=#{user}&word=#{in_word}"
-    # Then I should receive a 201 Created Response
-    expect(response.status).to eq(201)
-    # When I send a GET request to "/api/v1/games/1" I receive a JSON response as follows:
-    game = JSON.parse(response.body, symbolize_names: true)
-    expect(game).to eq(
-    {
-      "game_id":1,
-      "scores": [
-        {
-          "user_id":1,
-          "score":17
-        },
-        {
-          "user_id":2,
-          "score":16
-        }
-      ]
-    })
+  it 'returns a valid json response' do
+    VCR.use_cassette('requests/user_can_validate_word') do
+      # You can choose to send the user_id and word specified below however you'd like or are comfortable.
+      #
+      # When I send a POST request to "/api/v1/games/1/plays" with a user_id=1 and word=at
+      user = '1'
+      in_word = 'at'
+      post "/api/v1/games/1/plays?user_id=#{user}&word=#{in_word}"
+      # Then I should receive a 201 Created Response
+      expect(response.status).to eq(201)
+      # When I send a GET request to "/api/v1/games/1" I receive a JSON response as follows:
+      game = JSON.parse(response.body, symbolize_names: true)
+      expect(game).to eq(
+      {
+        "game_id":1,
+        "scores": [
+          {
+            "user_id":1,
+            "score":17
+          },
+          {
+            "user_id":2,
+            "score":16
+          }
+        ]
+      })
+    end
+  end
+
+  it 'returns a valid json response' do
+    VCR.use_cassette('requests/invalid_word') do
+      user = '1'
+      in_word = 'foxez'
+      
+      post "/api/v1/games/1/plays?user_id=#{user}&word=#{in_word}"
+
+      game = JSON.parse(response.body, symbolize_names: true)
+      expect(game).to eq( {"message": "'foxez' is not a valid word."} )
+    end
   end
 end
