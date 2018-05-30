@@ -7,6 +7,11 @@ describe Play do
         play = create(:play, word: "assess")
         expect(play.score).to eq(6)
       end
+
+      it "scores different word" do
+        play = create(:play, word: "amazing")
+        expect(play.score).to eq(19)
+      end
     end
   end
 end
