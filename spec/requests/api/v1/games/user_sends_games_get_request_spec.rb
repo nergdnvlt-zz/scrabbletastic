@@ -31,13 +31,25 @@ describe 'it can get a single game' do
     #   ]
     # }
     expect(response).to be_successful
-    binding.pry
-    game = JSON.parse(response.body)
+    game = JSON.parse(response.body, symbolize_names: true)
 
-    expect(game['game_id']).to eq(1)
-    expect(game['scores'][0]['user_id']).to eq(1)
-    expect(game['scores'][0]['score']).to eq(15)
-    expect(game['scores'][1]['user_id']).to eq(1)
-    expect(game['scores'][1]['score']).to eq(15)
+    expect(game[:game_id]).to eq(1)
+    expect(game[:scores][0][:user_id]).to eq(1)
+    expect(game[:scores][0][:score]).to eq(15)
+    expect(game[:scores][1][:user_id]).to eq(2)
+    expect(game[:scores][1][:score]).to eq(16)
+    expect(game).to eq( {
+      "game_id":1,
+      "scores": [
+        {
+          "user_id":1,
+          "score":15
+        },
+        {
+          "user_id":2,
+          "score":16
+        }
+      ]
+    })
   end
 end
