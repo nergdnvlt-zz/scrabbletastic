@@ -12,27 +12,25 @@ describe 'it can get a single game' do
     sal.plays.create(game: game, word: "josh", score: 14)
     sal.plays.create(game: game, word: "no", score: 2)
   end
-  
+
   it 'returns a json response' do
-    # Background: This story assumes the base data from running `rake db:seed`
+    # You can choose to send the user_id and word specified below however you'd like or are comfortable.
+    #
+    # When I send a POST request to "/api/v1/games/1/plays" with a user_id=1 and word=at
+    user = '1'
+    in_word = 'at'
+    post "/api/v1/games/1/plays?user_id=#{user}&word=#{in_word}"
+    # Then I should receive a 201 Created Response
+    expect(response.status).to eq(201)
     # When I send a GET request to "/api/v1/games/1" I receive a JSON response as follows:
-
-    get '/api/v1/games/1'
-
-    expect(response).to be_successful
     game = JSON.parse(response.body, symbolize_names: true)
-
-    expect(game[:game_id]).to eq(1)
-    expect(game[:scores][0][:user_id]).to eq(1)
-    expect(game[:scores][0][:score]).to eq(15)
-    expect(game[:scores][1][:user_id]).to eq(2)
-    expect(game[:scores][1][:score]).to eq(16)
-    expect(game).to eq( {
+    expect(game).to eq(
+    {
       "game_id":1,
       "scores": [
         {
           "user_id":1,
-          "score":15
+          "score":17
         },
         {
           "user_id":2,

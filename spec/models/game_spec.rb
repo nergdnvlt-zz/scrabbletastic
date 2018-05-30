@@ -26,7 +26,7 @@ describe Game do
         sal.plays.create(game: game, word: "josh", score: 14)
         sal.plays.create(game: game, word: "no", score: 2)
         game = game.as_json
-  
+
         expect(game).to eq({:game_id=>1, :scores=>[{:user_id=>1, :score=>15}, {:user_id=>2, :score=>16}]})
       end
     end
