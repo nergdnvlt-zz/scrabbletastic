@@ -23,21 +23,30 @@ class SearchService
   end
 
   def parse
+    return nil if response.body.include?('404')
     JSON.parse(response.body)
   end
 
   def message
-    Word.new(parse).message
+    Word.new(parse, @word).message
   end
 end
 
 class Word
-  def initialize(attrs)
-    @original_word = attrs['results'][0]['id']
-    @root_word = attrs['results'][0]['lexicalEntries'][0]['inflectionOf'][0]['id']
+  def initialize(attrs, original_word)
+    @attrs = attrs
+    @original_word = original_word
+  end
+
+  def root_word
+    @attrs['results'][0]['lexicalEntries'][0]['inflectionOf'][0]['id']
   end
 
   def message
-    "'#{@original_word}' is a valid word and its root form is '#{@root_word}'."
+    if @attrs == nil
+      "'#{@original_word}' is not a valid word."
+    else
+    "'#{@original_word}' is a valid word and its root form is '#{root_word}'."
+    end
   end
 end
