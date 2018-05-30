@@ -15,15 +15,15 @@ feature 'User fills in field with word' do
     # Then I should see a message that says "'foxes' is a valid word and its root form is 'fox'."
     expect(page).to have_content("'foxes' is a valid word and its root form is 'fox'.")
   end
-
-  scenario 'it gives feedback that a word is not valid' do
-    # When I visit "/"
-    visit '/'
-    # And I fill in a text box with "foxez"
-    fill_in 'q', with: 'foxez'
-    # And I click "Validate Word"
-    click_on 'Validate Word'
-    # Then I should see a message that says "'foxez' is not a valid word."
-    expect(page).to have_content("'foxez' is not a valid word.")
-  end
+  # 
+  # scenario 'it gives feedback that a word is not valid' do
+  #   # When I visit "/"
+  #   visit '/'
+  #   # And I fill in a text box with "foxez"
+  #   fill_in 'q', with: 'foxez'
+  #   # And I click "Validate Word"
+  #   click_on 'Validate Word'
+  #   # Then I should see a message that says "'foxez' is not a valid word."
+  #   expect(page).to have_content("'foxez' is not a valid word.")
+  # end
 end
