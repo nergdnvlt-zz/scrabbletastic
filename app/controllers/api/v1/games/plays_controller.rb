@@ -1,4 +1,5 @@
 class Api::V1::Games::PlaysController < ApplicationController
+  skip_before_action :verify_authenticity_token
   include PlaysHelper
 
   before_action :evaluate_message, :set_game, :set_player, only: [:create]
