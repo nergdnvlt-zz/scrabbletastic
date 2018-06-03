@@ -4,7 +4,7 @@ class SearchService
   end
 
   def message
-    Word.new(parse, @word).message
+    Word.message(parse, @word)
   end
 
   private
