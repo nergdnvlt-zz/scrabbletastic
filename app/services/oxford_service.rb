@@ -7,7 +7,7 @@ class OxfordService
     return nil if response.body.include?('404')
     JSON.parse(response.body)
   end
-  
+
   private
 
   def response
