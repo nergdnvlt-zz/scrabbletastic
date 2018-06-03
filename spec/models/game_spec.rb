@@ -10,7 +10,7 @@ describe Game do
         game = Game.create(player_1: josh, player_2: sal)
         josh.plays.create(game: game, word: "sal", score: 3)
         josh.plays.create(game: game, word: "zoo", score: 12)
-        expect(game.total_score(josh.id)).to eq(15)
+        expect(game.total_score(game.id, josh.id)).to eq(15)
       end
     end
 
